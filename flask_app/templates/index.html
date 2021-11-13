@@ -1,0 +1,12 @@
+{% extends "template.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        {% if current_user.is_authenticated %}
+            Welcome, {{ current_user.username }}
+            
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
