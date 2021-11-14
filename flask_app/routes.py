@@ -59,7 +59,14 @@ def logout():
     return redirect(url_for('index'))
 
 
+# UNIQUE USER PAGES
+
 @app.route("/profile")
 @login_required
 def profile():
     return render_template("account.html")
+
+@app.route("/homepage")
+@login_required
+def homepage():
+    return render_template("homepage.html")
