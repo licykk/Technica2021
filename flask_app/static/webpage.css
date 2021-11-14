@@ -1,12 +1,11 @@
 h1 {
-    color: rgb(138, 102, 204);
+    color: rgb(192, 176, 151);
 }
 
-aside {
-    float:left;
-    width: %;
-    padding-left: 15px;
-    margin-left: 15px;
-    font-style: italic;
-    background-color: lightgray;
-  }
+p1 {
+    color: rgb(192, 176, 151);
+}
+
+nav { 
+    color:rgb(109, 144, 221)
+}
