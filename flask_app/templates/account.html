@@ -1,6 +1,9 @@
 {% extends "webpage.html" %}
 
 {% block content %}
+<title>{{ current_user.username }}'s Profile</title>
+{% include "mood.html" %}
+
 <div class="row">
     <div class="col">
         <h1> Posts <small class="float-right">{{ posts|length }} posts</small></h1>

@@ -1,10 +1,10 @@
-from wtforms.fields.core import RadioField
+from wtforms.fields.core import RadioField, SelectMultipleField
 from wtforms.widgets.core import Input
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from werkzeug.utils import secure_filename
-from wtforms import StringField, IntegerField, SubmitField, TextAreaField, PasswordField
+from wtforms import StringField, IntegerField, SubmitField, TextAreaField, PasswordField, SelectMultipleField, SelectField
 from wtforms.validators import (
     InputRequired,
     DataRequired,
@@ -27,12 +27,13 @@ class PostForm(FlaskForm):
     content = TextAreaField(
         "What's on your mind?", validators=[InputRequired(), Length(min=0, max=200)]
     )
+    tags = SelectMultipleField("Tags", choices=[("Sad","Sad"), ("Happy","Happy"), ("Afraid","Afraid"), ("Angry","Angry"), ("Surprised","Surprised"), ("Disgusted","Disgusted"), ("Neutral","Neutral")])
     submit = SubmitField("Post")
-
+ 
 # HOME
 
 class MoodForm(FlaskForm):
-    mood = RadioField("Mood", choices=["Very Sad", "Sad", "Neutral", "Happy", "Very Happy"])
+    mood = RadioField("Mood", choices=["Sad", "Happy", "Afraid", "Angry", "Surprised", "Disgusted", "Neutral"])
     submit = SubmitField("Check in")
 
 class PromptForm(FlaskForm):

@@ -13,6 +13,10 @@
             <p>
                 {{ post.content }}
             </p>
+            Tags:
+            {% for tag in post.tags %}
+            {{ tag }}
+            {% endfor %}
         </div>
     </div>
 </div>

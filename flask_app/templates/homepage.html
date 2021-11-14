@@ -1,5 +1,6 @@
 {% extends "webpage.html" %}
 {% block content %}
+<title>Home</title>
 
 {% if current_user.daily_prompt_date != date %}
 <div class="p-5 mb-4" style="background-color: #f0ece3;">
@@ -20,7 +21,5 @@
 {% else %}
 
 {% endif %}
-
-{% include "mood.html" %}
 
 {% endblock %}

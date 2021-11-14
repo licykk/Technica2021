@@ -1,11 +1,10 @@
 {% extends "webpage.html" %}
 {% block content %}
-<title>{{ user.username }}</title>
+<title>Feed</title>
 <div class="row">
     <div class="col">
-        Mood: {{ user_mood }}
+        <h3>Feed</h3>
         <br>
-        <h1> Posts <small class="float-right">{{ posts|length }} posts</small></h1>
         {% for post in posts %}
             <div class="media-body">
             <a href="{{ url_for('post_detail', post_id=post.id) }}">

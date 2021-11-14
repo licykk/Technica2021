@@ -1,5 +1,7 @@
 from flask_login import UserMixin
 from datetime import date, datetime
+
+from mongoengine.fields import StringField
 from . import db, login_manager
 
 
@@ -25,5 +27,6 @@ class Post(db.Document):
     user = db.ReferenceField('User')
     title = db.StringField(min_length=1, required=True)
     content = db.StringField(min_length=1, required=True)
+    tags = db.ListField(db.StringField())
     date = db.StringField(required=True)
 

@@ -41,8 +41,9 @@ def post_detail(post_id):
 @app.route("/user/<user_id>")
 @login_required
 def user_detail(user_id):
-    posts=Post.objects(user=User.objects(id=user_id).first())
-    return render_template("user_detail.html", posts=posts)
+    user=User.objects(id=user_id).first()
+    posts=Post.objects(user=user)
+    return render_template("user_detail.html", user=user, posts=posts, user_mood=current_user.mood)
 
 # USER MANAGEMENT PAGES - LOGIN, REGISTER, ETC.
 
@@ -81,14 +82,23 @@ def logout():
 
 
 # UNIQUE USER PAGES
+@app.route("/feed")
+@login_required
+def feed():
+    posts = reversed(Post.objects())
+    return render_template("feed.html", posts=posts)
 
-@app.route("/account")
+@app.route("/account", methods=["GET", "POST"])
 @login_required
 def profile():
     posts = Post.objects(user=current_user)
-    print(posts)
 
-    return render_template("account.html", posts=posts)
+    mood = MoodForm()
+    if mood.validate_on_submit():
+        current_user.modify(mood=mood.mood.data)
+        return redirect(url_for("profile"))
+
+    return render_template("account.html", posts=posts, mood_form=mood, current_mood=current_user.mood)
 
 @app.route("/homepage", methods=["GET", "POST"])
 @login_required
@@ -110,23 +120,20 @@ def homepage():
 
         return redirect(url_for("homepage"))
 
-    mood = MoodForm()
-    if mood.validate_on_submit():
-        current_user.modify(mood=mood.mood.data)
-        return redirect(url_for("homepage"))
-
-    return render_template("homepage.html", mood_form=mood, current_mood=current_user.mood, prompt=prompt, prompt_form=prompt_form, date=datetime.now().strftime("%B %d %Y"))
+    return render_template("homepage.html", prompt=prompt, prompt_form=prompt_form, date=datetime.now().strftime("%B %d %Y"))
 
 @app.route("/post", methods=["GET", "POST"])
 @login_required
 def post():
     form = PostForm()
 
+    print(form.tags)
     if form.validate_on_submit():
         post = Post(
             user=current_user._get_current_object(),
             title=form.title.data,
             content=form.content.data,
+            tags=form.tags.data,
             date=datetime.now().strftime("%B %d, %Y at %H:%M:%S"),
         )
 
