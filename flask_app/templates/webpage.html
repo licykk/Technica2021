@@ -12,14 +12,14 @@
   
     <nav class="navbar navbar-expand-lg" style="background-color: #b1d5e1;" >
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Place pretty logo here!</a>
+          <a class="navbar-brand" href="{{ url_for('index') }}">Place pretty logo here!</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="{{ url_for('homepage') }}">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" href="#">Feed</a>
@@ -31,6 +31,8 @@
 
             
             {% if current_user.is_authenticated %}
+            <a class="nav-link" href="{{ url_for('profile') }}">{{ current_user.username }}</a>
+            <a class="nav-link" href="{{ url_for('post') }}" style="font-size:20px;">+</a>
             <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
             {% else %}
             <a class="nav-link" href="{{ url_for('login') }}">Login</a>
@@ -40,17 +42,7 @@
             
           </div>
         </div>
-      </nav>
-
-       <div class="p-5 mb-4" style="background-color: #f0ece3;">
-      <div class="container-fluid py-5">
-        <p1 class="col-md-8 fs-4">PROMPT OF THE DAY</p1> <br>
-        <p2 class="display-5 fw-bold">Insert fun prompt here!</p2> 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-          <input type="text" class="form-control form-control-light" placeholder="Start typing..." aria-label="Response">
-        </form>
-      </div>
-    </div>
+    </nav>
 </body>
 </html> 
 

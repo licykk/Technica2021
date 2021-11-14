@@ -1,6 +1,21 @@
+{% extends "webpage.html" %}
+
 {% block content %}
-{{ form.caption.label }}
-{{ form.caption(class="form-control") }}
-{{ form.picture.image }}
-{{ form.picture(class="form-control") }}
+
+<div class="row">
+    <div class="col">
+        <form method="POST" action="">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                {{ form.title.label }}
+                {{ form.title(class="form-control") }}
+                {{ form.content.label }}
+                {{ form.content(class="form-control") }}
+                {{ form.submit() }}
+            </div>
+          </form>
+        
+    </div>
+</div>
+
 {% endblock %}

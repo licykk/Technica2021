@@ -1,3 +1,4 @@
+from wtforms.fields.core import RadioField
 from wtforms.widgets.core import Input
 from flask_login import current_user
 from flask_wtf import FlaskForm
@@ -20,22 +21,23 @@ from .models import User
 class PostForm(FlaskForm):
 
     ##to post picture
-    caption = StringField(
-        "Describe your post!", validators=[InputRequired(), Length(min=0, max=60)]
+    title = StringField(
+        "Title", validators=[InputRequired(), Length(min=0, max=60)]
     )
     picture = FileField(
         validators=[FileRequired()]
     )
     ##blog 
-    blogPost = StringField(
+    content = TextAreaField(
         "What's on your mind?", validators=[InputRequired(), Length(min=0, max=200)]
     )
+    submit = SubmitField("Post")
 
 # HOME
 
 class MoodForm(FlaskForm):
-    pass
-
+    mood = RadioField("Mood", choices=["Very Sad", "Sad", "Neutral", "Happy", "Very Happy"])
+    submit = SubmitField("Check in")
 
 
 # USER MANAGEMENT

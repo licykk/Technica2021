@@ -14,6 +14,7 @@ from . import app, bcrypt
 from .models import User, load_user
 from .forms import (
     LoginForm,
+    MoodForm,
     PostForm,
     RegistrationForm,
 )
@@ -75,7 +76,13 @@ def logout():
 def profile():
     return render_template("account.html")
 
-@app.route("/homepage")
+@app.route("/homepage", methods=["GET", "POST"])
 @login_required
 def homepage():
-    return render_template("homepage.html")
+    mood = MoodForm()
+
+    if mood.validate_on_submit():
+        current_user.modify(mood=mood.mood.data)
+        return redirect(url_for("homepage"))
+
+    return render_template("homepage.html", mood_form=mood, current_mood=current_user.mood)
