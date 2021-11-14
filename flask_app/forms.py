@@ -17,7 +17,19 @@ from wtforms.validators import (
 
 from .models import User
 
+class PostForm(FlaskForm):
 
+    ##to post picture
+    caption = StringField(
+        "Describe your post!", validators=[InputRequired(), Length(min=0, max=60)]
+    )
+    picture = FileField(
+        validators=[FileRequired()]
+    )
+    ##blog 
+    blogPost = StringField(
+        "What's on your mind?", validators=[InputRequired(), Length(min=0, max=200)]
+    )
 
 
 # USER MANAGEMENT
