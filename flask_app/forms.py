@@ -15,17 +15,13 @@ from wtforms.validators import (
     ValidationError,
 )
 
-
 from .models import User
+
 
 class PostForm(FlaskForm):
 
-    ##to post picture
     title = StringField(
         "Title", validators=[InputRequired(), Length(min=0, max=60)]
-    )
-    picture = FileField(
-        validators=[FileRequired()]
     )
     ##blog 
     content = TextAreaField(
@@ -39,6 +35,9 @@ class MoodForm(FlaskForm):
     mood = RadioField("Mood", choices=["Very Sad", "Sad", "Neutral", "Happy", "Very Happy"])
     submit = SubmitField("Check in")
 
+class PromptForm(FlaskForm):
+    content = TextAreaField("Prompt", validators=[InputRequired(), Length(min=1)])
+    submit = SubmitField("Write")
 
 # USER MANAGEMENT
 

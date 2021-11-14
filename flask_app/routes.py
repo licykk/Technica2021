@@ -1,3 +1,4 @@
+import bson
 from flask import render_template, request, redirect, url_for, flash
 from flask_mongoengine import MongoEngine
 from flask_login import (
@@ -8,14 +9,21 @@ from flask_login import (
     login_required,
 )
 from flask_bcrypt import Bcrypt
+from mongoengine.base.fields import ObjectIdField
 from werkzeug.utils import secure_filename
 from . import app, bcrypt
+from datetime import datetime
 
-from .models import User, load_user
+from .models import (
+    User, 
+    Post,
+    load_user
+)
 from .forms import (
     LoginForm,
     MoodForm,
     PostForm,
+    PromptForm,
     RegistrationForm,
 )
 
@@ -23,15 +31,18 @@ from .forms import (
 def index():
     return render_template("index.html")
 
-@app.route("/post", methods=["GET", "POST"])
-def post():
-    form = PostForm()
 
-    if form.validate_on_submit():
-        pass
+@app.route("/posts/<post_id>")
+@login_required
+def post_detail(post_id):
+    post=Post.objects(id=post_id).first()
+    return render_template("post_detail.html", post=post)
 
-    return render_template("post.html", form=form)
-
+@app.route("/user/<user_id>")
+@login_required
+def user_detail(user_id):
+    posts=Post.objects(user=User.objects(id=user_id).first())
+    return render_template("user_detail.html", posts=posts)
 
 # USER MANAGEMENT PAGES - LOGIN, REGISTER, ETC.
 
@@ -71,18 +82,56 @@ def logout():
 
 # UNIQUE USER PAGES
 
-@app.route("/profile")
+@app.route("/account")
 @login_required
 def profile():
-    return render_template("account.html")
+    posts = Post.objects(user=current_user)
+    print(posts)
+
+    return render_template("account.html", posts=posts)
 
 @app.route("/homepage", methods=["GET", "POST"])
 @login_required
 def homepage():
-    mood = MoodForm()
+    prompt = "What do I know to be true that I didn’t know a year ago?"
 
+    prompt_form = PromptForm()
+    if prompt_form.validate_on_submit():
+        post = Post(
+            title="Prompt:" + prompt,
+            user=current_user._get_current_object(),
+            content=prompt_form.content.data,
+            date=datetime.now().strftime("%B %d, %Y at %H:%M:%S"),
+        )
+
+        current_user.modify(daily_prompt_date=datetime.now().strftime("%B %d %Y"))
+        
+        post.save()
+
+        return redirect(url_for("homepage"))
+
+    mood = MoodForm()
     if mood.validate_on_submit():
         current_user.modify(mood=mood.mood.data)
         return redirect(url_for("homepage"))
 
-    return render_template("homepage.html", mood_form=mood, current_mood=current_user.mood)
+    return render_template("homepage.html", mood_form=mood, current_mood=current_user.mood, prompt=prompt, prompt_form=prompt_form, date=datetime.now().strftime("%B %d %Y"))
+
+@app.route("/post", methods=["GET", "POST"])
+@login_required
+def post():
+    form = PostForm()
+
+    if form.validate_on_submit():
+        post = Post(
+            user=current_user._get_current_object(),
+            title=form.title.data,
+            content=form.content.data,
+            date=datetime.now().strftime("%B %d, %Y at %H:%M:%S"),
+        )
+
+        post.save()
+
+        return redirect(url_for("post_detail", post_id=post.id))
+
+    return render_template("post.html", form=form)

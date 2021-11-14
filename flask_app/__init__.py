@@ -16,7 +16,7 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
-app.config["MONGODB_HOST"] = "mongodb://localhost:27017/project_4"
+app.config["MONGODB_HOST"] = "mongodb://localhost:27017/technica2021"
 app.config["SECRET_KEY"] = b'\x9e\xdd\xf0\xecU\x85\xa6J`\xe7H\xe8\x8c\x02\xec\xd8'
 
 ALLOWED_EXTENSIONS = {'jpg', 'png'}

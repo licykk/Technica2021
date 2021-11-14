@@ -1,15 +1,25 @@
 {% extends "webpage.html" %}
 {% block content %}
 
+{% if current_user.daily_prompt_date != date %}
 <div class="p-5 mb-4" style="background-color: #f0ece3;">
     <div class="container-fluid py-5">
       <p1 class="col-md-8 fs-4">PROMPT OF THE DAY</p1> <br>
-      <p2 class="display-5 fw-bold">Insert fun prompt here!</p2> 
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-        <input type="text" class="form-control form-control-light" placeholder="Start typing..." aria-label="Response">
+      <p2 class="display-5 fw-bold">{{ prompt }}</p2> 
+
       </form>
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="POST" action="">
+        {{ mood_form.csrf_token }}
+        <div class="form-group">
+          {{ prompt_form.content(class="form-control") }} <br>
+          {{ prompt_form.submit() }}
+        </div>
+    </form>
     </div>
-    </div>
+  </div>
+{% else %}
+
+{% endif %}
 
 {% include "mood.html" %}
 

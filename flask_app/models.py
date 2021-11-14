@@ -14,13 +14,16 @@ class User(db.Document, UserMixin):
     password = db.StringField()
     profile_pic = db.ImageField()
     mood = db.StringField()
+    daily_prompt_date = db.StringField()
 
     # Returns unique string identifying our object
     def get_id(self):
         return self.username
 
 
-class Review(db.Document):
-    commenter = db.ReferenceField('User')
-    content = db.StringField(min_length=5, max_length=500, required=True)
+class Post(db.Document):
+    user = db.ReferenceField('User')
+    title = db.StringField(min_length=1, required=True)
+    content = db.StringField(min_length=1, required=True)
     date = db.StringField(required=True)
+

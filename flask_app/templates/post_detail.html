@@ -1,23 +1,19 @@
 {% extends "webpage.html" %}
-
 {% block content %}
 <div class="row">
     <div class="col">
-        <h1> Posts <small class="float-right">{{ posts|length }} posts</small></h1>
-        {% for post in posts %}
-            <div class="media-body">
+        <div class="media-body">
             <a href="{{ url_for('post_detail', post_id=post.id) }}">
                 <h3>{{ post.title }}</h3>
             </a>
+            <a href="{{ url_for('user_detail', user_id=post.user.id) }}">{{ post.user.username }}</a>
             <span class="float-right">
                 <small>{{ post.date }}</small>
             </span>
-
             <p>
                 {{ post.content }}
             </p>
-            </div>
-        {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}
