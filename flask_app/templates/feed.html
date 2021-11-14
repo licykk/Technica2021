@@ -7,7 +7,7 @@
         <h3>Feed</h3>
         <br>
         {% for post in posts %}
-            <div class="card text-center" class="media-body" style="width: 50%; background-color: aliceblue;">
+            <div class="card text-center border-0" class="media-body" style="width: 50%; background-color: aliceblue;" >
             <a href="{{ url_for('post_detail', post_id=post.id) }}">
                 <h3>{{ post.title }}</h3>
             </a>

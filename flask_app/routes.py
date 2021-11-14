@@ -127,7 +127,6 @@ def homepage():
 def post():
     form = PostForm()
 
-    print(form.tags)
     if form.validate_on_submit():
         post = Post(
             user=current_user._get_current_object(),

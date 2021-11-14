@@ -1,6 +1,7 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='mood.css') }}">
 Mood: {{ current_mood }}
+<br>
 <form method="POST" action="">
     {{ mood_form.csrf_token }}
     <div class="form-group">
@@ -18,7 +19,8 @@ Mood: {{ current_mood }}
           <br>
           {% endfor %}
         </div>
-        {% endif %}    
+        {% endif %} 
+        <br>
         {{ mood_form.submit() }}
     </div>
 </form>

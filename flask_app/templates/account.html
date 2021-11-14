@@ -2,13 +2,14 @@
 
 {% block content %}
 <title>{{ current_user.username }}'s Profile</title>
+<h1>{{ current_user.username }}'s Profile</h1>
 {% include "mood.html" %}
 
 <div class="row">
     <div class="col">
-        <h1> Posts <small class="float-right">{{ posts|length }} posts</small></h1>
+        <h1>Posts</h1><small class="float-right">{{ posts|length }} posts</small>
         {% for post in posts %}
-            <div class="media-body">
+            <div class="card text-center border-0" class="media-body" style="width: 50%; background-color: aliceblue;">
             <a href="{{ url_for('post_detail', post_id=post.id) }}">
                 <h3>{{ post.title }}</h3>
             </a>
@@ -20,6 +21,7 @@
                 {{ post.content }}
             </p>
             </div>
+            <br>
         {% endfor %}
     </div>
 </div>
