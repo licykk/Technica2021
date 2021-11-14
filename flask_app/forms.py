@@ -19,6 +19,12 @@ from .models import User
 
 
 
+# HOME
+
+class MoodForm(FlaskForm):
+    pass
+
+
 
 # USER MANAGEMENT
 
