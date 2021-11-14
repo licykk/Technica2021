@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Page Title</title>
-    <link href = "C:\Users\jenny\Desktop\technica 2021\webpage.css" rel = "stylesheet" type = "text/css"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='webpage.css') }}">
 </head>
 
 <body>
@@ -11,10 +11,16 @@
 
     <aside> 
         <div class="navbar">
-            <a href="#">Link to Home</a> <br>
+            <a href="{{ url_for('index') }}">Link to Home</a> <br>
             <a href="#">Link to Feed</a> <br> 
-            <a href="#">Link to Chat</a> <br> 
-            <a href="#" class="right">Link to Profile</a>
+            <a href="">Link to Chat</a> <br> 
+            {% if current_user.is_authenticated %}
+            <a href="#" class="right">Account</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+            <a href="{{ url_for('login') }}">Login</a> <br>
+            <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
         </div>
     </aside>
 </body>
