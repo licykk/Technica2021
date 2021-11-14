@@ -31,6 +31,12 @@ class PostForm(FlaskForm):
         "What's on your mind?", validators=[InputRequired(), Length(min=0, max=200)]
     )
 
+# HOME
+
+class MoodForm(FlaskForm):
+    pass
+
+
 
 # USER MANAGEMENT
 
