@@ -14,6 +14,7 @@ from . import app, bcrypt
 from .models import User, load_user
 from .forms import (
     LoginForm,
+    PostForm,
     RegistrationForm,
 )
 
@@ -21,6 +22,14 @@ from .forms import (
 def index():
     return render_template("index.html")
 
+@app.route("/post", methods=["GET", "POST"])
+def post():
+    form = PostForm()
+
+    if form.validate_on_submit():
+        pass
+
+    return render_template("post.html", form=form)
 
 
 # USER MANAGEMENT PAGES - LOGIN, REGISTER, ETC.
